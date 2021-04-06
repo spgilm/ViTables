@@ -31,6 +31,7 @@ from qtpy import QtWidgets
 from vitables.vtapp import VTApp
 from vitables.preferences import vtconfig
 
+QT_MAC_WANTS_LAYER = 1
 __docformat__ = 'restructuredtext'
 
 # Map number of -v's on command line to logging error level.
@@ -40,7 +41,6 @@ _VERBOSITY_LOGLEVEL_DICT = {0: logging.ERROR, 1: logging.WARNING,
 _FILE_LOG_FORMAT = '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
 # Folder with vitables translations.
 _I18N_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'i18n')
-
 
 _uncaught_exception_logger = logging.getLogger('vitables')
 
