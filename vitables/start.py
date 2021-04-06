@@ -24,6 +24,8 @@ import argparse
 import os.path
 import logging
 import traceback
+import platform
+import os
 
 import qtpy.QtCore as qtcore
 from qtpy import QtWidgets
@@ -31,7 +33,10 @@ from qtpy import QtWidgets
 from vitables.vtapp import VTApp
 from vitables.preferences import vtconfig
 
-QT_MAC_WANTS_LAYER = 1
+# Darwin is macOs name convention.
+if platform.system() == 'Darwin':
+    os.environ['QT_MAC_WANTS_LAYER'] = 1
+
 __docformat__ = 'restructuredtext'
 
 # Map number of -v's on command line to logging error level.
