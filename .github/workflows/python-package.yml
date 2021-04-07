@@ -27,10 +27,10 @@ jobs:
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
     - name: Create dummy test_h5_file
       run: |
-        python ~/tests/create_testfile.py
+        python $(pwd)/tests/create_testfile.py
     - name: Run pytest_config
       run: |
-        python ~/tests/conftest.py
+        python $(pwd)/tests/conftest.py
     - name: Test with pytest
       run: |
         python -m pytest
