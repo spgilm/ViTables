@@ -25,6 +25,12 @@ jobs:
         python -m pip install --upgrade pip
         pip install flake8 pytest nose
         if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+    - name: Create dummy test_h5_file
+      run: |
+        python ~/tests/create_testfile.py
+    - name: Run pytest_config
+      run: |
+        python ~/tests/conftest.py
     - name: Test with pytest
       run: |
         python -m pytest
