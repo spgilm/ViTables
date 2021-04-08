@@ -4,3 +4,4 @@ numpy
 tables
 PyQt5
 QtPy
+nose
