@@ -25,9 +25,6 @@ jobs:
     - name: Create dummy test_h5_file
       run: |
         python $(pwd)/tests/create_testfile.py
-    - name: Run pytest_config
-      run: |
-        python $(pwd)/tests/conftest.py
     - name: Test with pytest
       run: |
         python -m pytest
