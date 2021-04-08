@@ -10,12 +10,12 @@ import pytest
 import tables
 
 from qtpy import QtWidgets
-
-import vitables.vtapp
+from vitables import vtapp
+# import vitables.vtapp
 from vitables.preferences import vtconfig
 
 
-print(vitables.vtapp)
+# print(vitables.vtapp)
 
 class Launcher(object):
     def __init__(self):
@@ -24,7 +24,7 @@ class Launcher(object):
         self.app.setOrganizationName('ViTables')
         self.app.setApplicationName('ViTables')
         self.app.setApplicationVersion(vtconfig.getVersion())
-        self.vtapp_object = vitables.vtapp.VTApp(keep_splash=False)
+        self.vtapp_object = vtapp.VTApp(keep_splash=False)
         self.gui = self.vtapp_object.gui
 
 
