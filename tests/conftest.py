@@ -15,6 +15,8 @@ import vitables.vtapp
 from vitables.preferences import vtconfig
 
 
+print(vitables.vtapp)
+
 class Launcher(object):
     def __init__(self):
         self.app = QtWidgets.QApplication(sys.argv)
