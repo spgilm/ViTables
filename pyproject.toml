@@ -1,0 +1,30 @@
+[build-system]
+requires = [
+    "setuptools >= 35.0.2",
+    "setuptools_scm >= 2.0.0, <3",
+    "PyQt5",
+    "pytest",
+    "pytest-qt",
+     "Cython",
+    "numexpr",
+    "numpy",
+    "tables",
+    "QtPy"
+]
+build-backend = "setuptools.build_meta"
+
+[tool.tox]
+legacy_tox_ini = """
+[tox]
+isolated_build = True
+envlist = py{38}-pyqt5
+[testenv]
+deps=
+    pytest
+    pytest-qt
+    -rrequirements.txt
+setenv=
+    pyqt5: PYTEST_QT_API=pyqt5
+    QT_QPA_PLATFORM=offscreen
+commands= pytest {posargs:tests}
+"""
