@@ -32,6 +32,7 @@ from qtpy import QtWidgets
 
 import vitables.utils
 
+
 def getArrayDimensions(shape):
     """
     Get the dimensions of the grid where the cell will be zoomed.
@@ -58,6 +59,7 @@ def getArrayDimensions(shape):
         ncols = shape[1]
 
     return (nrows, ncols)
+
 
 class ZoomCell(QtWidgets.QMdiSubWindow):
     """
@@ -99,7 +101,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
         a (potentially nested) `numpy` array. See cell accessor methods
         in the `Buffer` class for details.
         """
-
 
         self.data = data
         self.title = title
@@ -162,7 +163,7 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
                 self.grid.setHorizontalHeaderItem(section, item)
 
         # Setup grid vertical header
-        for section in range(0,nrows):
+        for section in range(0, nrows):
             item = QtWidgets.QTableWidgetItem()
             item.setText('{0}'.format(section))
             self.grid.setVerticalHeaderItem(section, item)
@@ -184,11 +185,9 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
         # Connect signals to slots
         self.grid.cellDoubleClicked.connect(self.zoomView)
 
-
     def hasShape(self):
         """Find out if the zoomed cell has a shape attribute."""
         return hasattr(self.data, 'shape')
-
 
     def getGridDimensions(self):
         """
@@ -211,7 +210,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
             # The cell contains a Python object
             return self.getPyObjectDimensions()
 
-
     def getPyObjectDimensions(self):
         """
         Get the dimensions of the grid where the cell will be zoomed.
@@ -225,7 +223,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
             return (len(self.data), 1)
         else:
             return (1, 1)
-
 
     def getNestedFieldDimensions(self):
         """
@@ -251,7 +248,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
 
         return (nrows, ncols)
 
-
     def zoomTable(self):
         """Fill the zoom view with the content of the clicked nested field."""
 
@@ -260,7 +256,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
             text = self.formatContent(content)
             item = QtWidgets.QTableWidgetItem(text)
             self.grid.setItem(0, column, item)
-
 
     def zoomArray(self):
         """Fill the zoom view with the content of the clicked cell."""
@@ -289,7 +284,6 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
                     item = QtWidgets.QTableWidgetItem(text)
                     self.grid.setItem(row, column, item)
 
-
     def zoomView(self, row, col):
         """Makes the content of the clicked cell fully visible.
 
@@ -301,7 +295,7 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
 
         # Check if the zoom has to be done
         if self.data_shape:
-            if not (self.data.shape !=() or self.field_names):
+            if not (self.data.shape != () or self.field_names):
                 return
         elif not (isinstance(self.data, list) or isinstance(self.data, tuple)):
             return
@@ -318,11 +312,12 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
         else:
             # Python lists and tuples
             cell = self.data[row]
-
         # Get caption
         if self.field_names:
             caption = '{0}: {1}[{2}]'.format(self.title,
-                self.field_names[col], row)
+                                             self.field_names[col], row)
         else:
             caption = '{0}: ({1}, {2})'.format(self.title, row, col)
         ZoomCell(cell, caption, self.workspace, self.dbt_leaf)
+
+

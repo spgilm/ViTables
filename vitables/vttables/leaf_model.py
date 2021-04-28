@@ -257,3 +257,7 @@ class LeafModel(QtCore.QAbstractTableModel):
         except IndexError:
             log.error('IndexError! buffer start: {0} row, column: '
                       '{1}, {2}'.format(self.start, row, col))
+
+    def setData(self, row, col, value, role = QtCore.Qt.EditRole):
+        if role == QtCore.Qt.EditRole:
+            self.rbuffer.setCell(row, col, value)
