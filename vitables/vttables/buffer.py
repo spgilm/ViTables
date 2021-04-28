@@ -166,7 +166,7 @@ class Buffer(object):
         except tables.HDF5ExtError as e:
             log.error(
                 translate('Buffer', """\nError: problems reading records. """
-                          """The dataset maybe corrupted.\n{}""",
+                                    """The dataset maybe corrupted.\n{}""",
                           'A dataset readability error').format(e.message))
         except:
             vtutils.formatExceptionInfo()
@@ -264,4 +264,5 @@ class Buffer(object):
         return self.chunk[row][col]
 
     def setCell(self, row, col, value):
-        self.chunk[row][col] = value
+        if value.replace('.', '', 1).isdigit():
+            self.chunk[row][col] = value

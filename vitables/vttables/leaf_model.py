@@ -258,6 +258,10 @@ class LeafModel(QtCore.QAbstractTableModel):
             log.error('IndexError! buffer start: {0} row, column: '
                       '{1}, {2}'.format(self.start, row, col))
 
-    def setData(self, row, col, value, role = QtCore.Qt.EditRole):
+    def setData(self, index, value, role=QtCore.Qt.EditRole):
         if role == QtCore.Qt.EditRole:
-            self.rbuffer.setCell(row, col, value)
+            self.rbuffer.setCell(index.row(), index.column(), value)
+        return True
+
+    def flags(self, index):
+        return QtCore.Qt.ItemIsSelectable | QtCore.Qt.ItemIsEnabled | QtCore.Qt.ItemIsEditable
