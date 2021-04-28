@@ -150,10 +150,11 @@ class DataSheet(QtWidgets.QMdiSubWindow):
         row = index.row()
         column = index.column()
         tmodel = index.model()
+        x = input()
+        tmodel.setData(row, column, x)
         data = tmodel.cell(row, column)
         if data is None:
             return
-
         # The title of the zoomed view
         node = self.dbt_leaf
         info = nodeinfo.NodeInfo(node)

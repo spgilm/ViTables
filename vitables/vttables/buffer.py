@@ -262,3 +262,6 @@ class Buffer(object):
         # chunk = [nestedrecord0, nestedrecord1, ..., nestedrecordN]
         # and fields can be read from nestedrecordJ using indexing notation
         return self.chunk[row][col]
+
+    def setCell(self, row, col, value):
+        self.chunk[row][col] = value

@@ -125,3 +125,6 @@ class FilenodeBuffer(object):
         # chunk = [row0, row1, row2, ..., rowN]
         # and columns can be read from a given row using indexing notation
         return self.chunk[row]
+
+    def setCell(self, row, col, value):
+        self.chunk[row] = value

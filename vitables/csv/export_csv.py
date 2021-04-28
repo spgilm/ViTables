@@ -26,7 +26,6 @@ each line of the file is a data record.
 Neither numpy scalar arrays are exported.
 """
 
-
 import logging
 import os
 
@@ -124,7 +123,7 @@ class ExportToCSV(QtCore.QObject):
             translate('ExportToCSV', 'Exporting dataset to CSV format',
                       'Caption of the Export to CSV dialog'),
             dfilter=translate('ExportToCSV', """CSV Files (*.csv);;"""
-                              """All Files (*)""",
+                                             """All Files (*)""",
                               'Filter for the Export to CSV dialog'),
             settings={'accept_mode': QtWidgets.QFileDialog.AcceptSave,
                       'file_mode': QtWidgets.QFileDialog.AnyFile,
@@ -187,21 +186,19 @@ class ExportToCSV(QtCore.QObject):
 
         return filepath, add_header
 
-    # def _try_exporting_dataframe(self, leaf):
-    #     ## FIXME: Hack to export to csv.
-    #     #
-    #     from ...vttables import df_model
-    #
-    #     leaf_model = df_model.try_opening_as_dataframe(leaf)
-    #     if not leaf_model:
-    #         return
-    #
-    #     export_info = self.getExportInfo(is_table=True)
-    #     if export_info is None:
-    #         return
-    #
-    #     leaf_model.to_csv(*export_info)
-    #     return True
+    def _try_exporting_dataframe(self, leaf):
+        from vitables.vttables import df_model
+        #
+        leaf_model = df_model.try_opening_as_dataframe(leaf)
+        if not leaf_model:
+            return
+        #
+        export_info = self.getExportInfo(is_table=True)
+        if export_info is None:
+            return
+        #
+        leaf_model.to_csv(*export_info)
+        return True
 
     def export(self):
         """Export a given dataset to a `CSV` file.
@@ -231,14 +228,14 @@ class ExportToCSV(QtCore.QObject):
         if len(leaf.shape) > 3:
             log.info(translate(
                 'ExportToCSV', 'The selected node has more than '
-                '3 dimensions. I can\'t export it to CSV format.'))
+                               '3 dimensions. I can\'t export it to CSV format.'))
             return
 
         # Variable length arrays aren't saved as CSV files
         if isinstance(leaf, tables.VLArray):
             log.info(translate(
                 'ExportToCSV', 'The selected node is a VLArray. '
-                'I can\'t export it to CSV format.'))
+                               'I can\'t export it to CSV format.'))
             return
 
         # Tables with Ndimensional fields aren't saved as CSV files
