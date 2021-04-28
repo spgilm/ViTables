@@ -76,7 +76,7 @@ class ExportToCSV(QtCore.QObject):
         """
 
         self.export_csv_action = QtWidgets.QAction(
-            translate('ExportToCSV', "E&xport to CSV...",
+            translate('ExportToCSV', "Export to CSV...",
                       "Save dataset as CSV"),
             self,
             shortcut=QtGui.QKeySequence.UnknownKey, triggered=self.export,
@@ -234,7 +234,7 @@ class ExportToCSV(QtCore.QObject):
                 '3 dimensions. I can\'t export it to CSV format.'))
             return
 
-        # Variable lenght arrays aren't saved as CSV files
+        # Variable length arrays aren't saved as CSV files
         if isinstance(leaf, tables.VLArray):
             log.info(translate(
                 'ExportToCSV', 'The selected node is a VLArray. '

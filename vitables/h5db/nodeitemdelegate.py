@@ -103,7 +103,7 @@ class NodeItemDelegate(QtWidgets.QItemDelegate):
             'Renaming a node: name already in use',
             'A dialog caption'),
             translate('NodeItemDelegate',
-                """Source file: {0}\nParent group: {1}\n\nThere is """
+                """Please reload table to see change\nSource file: {0}\nParent group: {1}\n\nThere is """
                 """already a node named '{2}' in that parent group.\n""",
                 'A dialog label').format\
                     (parent.filepath, parent.nodepath, suggested_nodename)]

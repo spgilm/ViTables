@@ -878,7 +878,7 @@ class VTApp(QtCore.QObject):
         # Get the new nodename
         dialog = nodenamedlg.InputNodeName(
             translate('VTApp', 'Renaming a node', 'A dialog caption'),
-            translate('VTApp', 'Source file: {0}\nParent group: {1}\n\n',
+            translate('VTApp', 'Please Reload Table to See Changes\nSource file: {0}\nParent group: {1}\n\n',
                       'A dialog label').format(parent.filepath,
                                                parent.nodepath),
             translate('VTApp', 'Rename', 'A button label'),

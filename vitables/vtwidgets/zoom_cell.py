@@ -25,6 +25,7 @@ Display recursively the content of a given cell of a view.
 
 __docformat__ = 'restructuredtext'
 
+from PyQt5.QtWidgets import QApplication
 from qtpy import QtCore
 from qtpy import QtGui
 from qtpy import QtWidgets
@@ -98,6 +99,7 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
         a (potentially nested) `numpy` array. See cell accessor methods
         in the `Buffer` class for details.
         """
+
 
         self.data = data
         self.title = title

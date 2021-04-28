@@ -278,7 +278,7 @@ class VTGUI(QtWidgets.QMainWindow):
             triggered=self.vtapp.nodeRename,
             icon=self.icons_dictionary['edit-rename'],
             statusTip=translate(
-                'VTGUI', 'Rename the selected node',
+                'VTGUI', 'Rename the selected node Please reload to see change',
                 'Status bar text for the Node -> Rename action'))
         actions['nodeRename'].setObjectName('nodeRename')
 

@@ -33,6 +33,7 @@ from qtpy import QtWidgets
 from vitables.vtapp import VTApp
 from vitables.preferences import vtconfig
 
+
 # Darwin is macOs name convention.
 if platform.system() == 'Darwin':
     os.environ['QT_MAC_WANTS_LAYER'] = 1
