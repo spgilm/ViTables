@@ -28,7 +28,7 @@ that leaf will be displayed in the workspace using this wrapper widget.
 
 from qtpy import QtCore
 from qtpy import QtWidgets
-
+from PyQt5.Qt import QApplication, QClipboard
 from . import leaf_view, leaf_model, df_model
 from .. import utils as vtutils
 from ..nodeprops import nodeinfo
@@ -94,6 +94,7 @@ class DataSheet(QtWidgets.QMdiSubWindow):
         # Connect signals to slots
         self.aboutToActivate.connect(self.syncTreeView)
         self.leaf_view.doubleClicked.connect(self.zoomCell)
+        self.clip = QApplication.clipboard()
 
     def closeEvent(self, event):
         """Close the window cleanly with the close button of the title bar.
@@ -166,3 +167,15 @@ class DataSheet(QtWidgets.QMdiSubWindow):
 
         zoom_cell.ZoomCell(data, title, self.vtgui.workspace,
                            self.dbt_leaf)
+
+    def keyPressEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Shift:
+            self.leaf_view.clicked.connect(self.clipping)
+
+    def clipping(self, index):
+        self.clip.clear()
+        row = index.row()
+        column = index.column()
+        tmodel = index.model()
+        clip = tmodel.cell(row, column)
+        self.clip.setText(str(clip))

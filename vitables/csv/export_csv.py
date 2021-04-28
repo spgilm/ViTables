@@ -186,15 +186,17 @@ class ExportToCSV(QtCore.QObject):
 
         return filepath, add_header
 
-    # FIXED: Issue #98.
     def _try_exporting_dataframe(self, leaf):
         from vitables.vttables import df_model
+        #
         leaf_model = df_model.try_opening_as_dataframe(leaf)
         if not leaf_model:
             return
+        #
         export_info = self.getExportInfo(is_table=True)
         if export_info is None:
             return
+        #
         leaf_model.to_csv(*export_info)
         return True
 
