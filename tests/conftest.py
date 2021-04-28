@@ -11,7 +11,7 @@ import tables
 
 from qtpy import QtWidgets
 from vitables import vtapp
-# import vitables.vtapp
+import vitables.vtapp
 from vitables.preferences import vtconfig
 
 

@@ -886,6 +886,15 @@ class VTApp(QtCore.QObject):
         self.gui.editing_dlg = True
         if dialog.exec_():
             suggested_nodename = dialog.node_name
+            current = False
+            if not current:
+                current = self.gui.dbs_tree_view.currentIndex()
+            pcurrent = QtCore.QPersistentModelIndex(current)
+            # Find out the subwindow tied to the selected node and close it
+            for data_sheet in self.gui.workspace.subWindowList():
+                if pcurrent == data_sheet.pindex:
+                    data_sheet.close()
+                    break
             del dialog
         else:
             del dialog
