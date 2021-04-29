@@ -171,6 +171,24 @@ class DataSheet(QtWidgets.QMdiSubWindow):
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Shift:
             self.leaf_view.clicked.connect(self.clipping)
+        elif event.key() == QtCore.Qt.Key_Control:
+            self.leaf_view.setSelectionBehavior(QtWidgets.QTableView.SelectColumns)
+            self.leaf_view.clicked.connect(self.viewClicked)
+
+    def keyReleaseEvent(self, event):
+        if event.key() == QtCore.Qt.Key_Control and not event.isAutoRepeat():
+            self.leaf_view.setSelectionBehavior(QtWidgets.QTableView.SelectItems)
+
+    def viewClicked(self, index):
+        tmodel = index.model()
+        col = index.column()
+        row = tmodel.rowCount()
+        self.leaf_view.clicked.disconnect(self.viewClicked)
+        with open('test.txt', 'a') as f:
+            for i in range(0, row):
+                f.write(str(tmodel.cell(i, col)))
+        f.close()
+
 
     def clipping(self, index):
         self.clip.clear()
