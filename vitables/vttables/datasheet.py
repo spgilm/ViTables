@@ -168,6 +168,7 @@ class DataSheet(QtWidgets.QMdiSubWindow):
         zoom_cell.ZoomCell(data, title, self.vtgui.workspace,
                            self.dbt_leaf)
 
+    # Press ctrl left click to select column
     def keyPressEvent(self, event):
         if event.key() == QtCore.Qt.Key_Shift:
             self.leaf_view.clicked.connect(self.clipping)
@@ -188,7 +189,6 @@ class DataSheet(QtWidgets.QMdiSubWindow):
             for i in range(0, row):
                 f.write(str(tmodel.cell(i, col)))
         f.close()
-
 
     def clipping(self, index):
         self.clip.clear()
