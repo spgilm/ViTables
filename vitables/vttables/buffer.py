@@ -264,5 +264,18 @@ class Buffer(object):
         return self.chunk[row][col]
 
     def setCell(self, row, col, value):
-        if value.replace('.', '', 1).isdigit():
-            self.chunk[row][col] = value
+        import numpy
+        print(type(self.chunk[row][col]))
+        if isinstance(self.chunk[row][col], numpy.bytes_) or isinstance(self.chunk[row][col], numpy.str):
+            value = numpy.array([value])
+            value = value.astype(dtype=type(self.chunk[row][col]), copy=False)
+            self.chunk[row][col] = value[0]
+            return
+
+        if isinstance(self.chunk[row][col], numpy.float64):
+            if value.replace('.', '', 1).isdigit():
+                self.chunk[row][col] = value
+            return
+        if isinstance(self.chunk[row][col], numpy.int64):
+            if value.isdigit():
+                self.chunk[row][col] = value
