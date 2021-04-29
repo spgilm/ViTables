@@ -272,10 +272,10 @@ class Buffer(object):
             self.chunk[row][col] = value[0]
             return
 
-        if isinstance(self.chunk[row][col], numpy.float64):
+        if isinstance(self.chunk[row][col], numpy.float64) or isinstance(self.chunk[row][col], float):
             if value.replace('.', '', 1).isdigit():
                 self.chunk[row][col] = value
             return
-        if isinstance(self.chunk[row][col], numpy.int64):
+        if isinstance(self.chunk[row][col], numpy.int64) or isinstance(self.chunk[row][col], int):
             if value.isdigit():
                 self.chunk[row][col] = value

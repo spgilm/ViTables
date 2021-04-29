@@ -167,6 +167,14 @@ class DataSheet(QtWidgets.QMdiSubWindow):
 
         zoom_cell.ZoomCell(data, title, self.vtgui.workspace,
                            self.dbt_leaf)
+        
+    def clipping(self, index):
+        self.clip.clear()
+        row = index.row()
+        column = index.column()
+        tmodel = index.model()
+        clip = tmodel.cell(row, column)
+        self.clip.setText(str(clip))
 
     # Press ctrl left click to select column
     def keyPressEvent(self, event):
@@ -179,6 +187,8 @@ class DataSheet(QtWidgets.QMdiSubWindow):
     def keyReleaseEvent(self, event):
         if event.key() == QtCore.Qt.Key_Control and not event.isAutoRepeat():
             self.leaf_view.setSelectionBehavior(QtWidgets.QTableView.SelectItems)
+        elif event.key() == QtCore.Qt.Key_Shift and not event.isAutoRepeat():
+            self.leaf_view.clicked.disconnect(self.clipping)
 
     def viewClicked(self, index):
         tmodel = index.model()
@@ -189,11 +199,3 @@ class DataSheet(QtWidgets.QMdiSubWindow):
             for i in range(0, row):
                 f.write(str(tmodel.cell(i, col)))
         f.close()
-
-    def clipping(self, index):
-        self.clip.clear()
-        row = index.row()
-        column = index.column()
-        tmodel = index.model()
-        clip = tmodel.cell(row, column)
-        self.clip.setText(str(clip))
