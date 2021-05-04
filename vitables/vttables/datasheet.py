@@ -191,11 +191,17 @@ class DataSheet(QtWidgets.QMdiSubWindow):
             self.leaf_view.clicked.disconnect(self.clipping)
 
     def viewClicked(self, index):
+        from os.path import dirname as up
+        import os
         tmodel = index.model()
         col = index.column()
         row = tmodel.rowCount()
         self.leaf_view.clicked.disconnect(self.viewClicked)
-        with open('test.txt', 'a') as f:
+        parentOfMasterFolder = up(up(os.getcwd()))
+        ImportedPath = os.path.join(parentOfMasterFolder, "IMPORTED FOLDER")
+        if not os.path.isdir(ImportedPath):
+            os.makedirs(ImportedPath)
+        with open(os.path.join(ImportedPath, 'IMPORTED_DATA.txt'), 'a') as f:
             for i in range(0, row):
-                f.write(str(tmodel.cell(i, col)))
+                f.write(str(tmodel.cell(i, col)) + '\n')
         f.close()

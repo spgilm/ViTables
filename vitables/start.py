@@ -26,13 +26,13 @@ import logging
 import traceback
 import platform
 import os
-
+import Clipboard
 import qtpy.QtCore as qtcore
+
 from qtpy import QtWidgets
 
 from vitables.vtapp import VTApp
 from vitables.preferences import vtconfig
-
 
 # Darwin is macOs name convention.
 if platform.system() == 'Darwin':
