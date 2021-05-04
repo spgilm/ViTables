@@ -265,17 +265,52 @@ class Buffer(object):
 
     def setCell(self, row, col, value):
         import numpy
-        print(type(self.chunk[row][col]))
-        if isinstance(self.chunk[row][col], numpy.bytes_) or isinstance(self.chunk[row][col], numpy.str):
-            value = numpy.array([value])
-            value = value.astype(dtype=type(self.chunk[row][col]), copy=False)
-            self.chunk[row][col] = value[0]
-            return
+        if self.chunk.shape == ():
+            # Array element will be read like a[()]
+            if isinstance(self.chunk[()], numpy.bytes_) or \
+                    isinstance(self.chunk[()], numpy.str):
+                value = numpy.array([value])
+                value = value.astype(dtype=type(self.chunk[()]), copy=False)
+                self.chunk[()] = value[0]
+                return
 
-        if isinstance(self.chunk[row][col], numpy.float64) or isinstance(self.chunk[row][col], float):
-            if value.replace('.', '', 1).isdigit():
-                self.chunk[row][col] = value
-            return
-        if isinstance(self.chunk[row][col], numpy.int64) or isinstance(self.chunk[row][col], int):
-            if value.isdigit():
-                self.chunk[row][col] = value
+            if isinstance(self.chunk[()], numpy.float):
+                if value.replace('.', '', 1).isdigit():
+                    self.chunk[()] = value
+                return
+            if isinstance(self.chunk[()], numpy.integer):
+                if value.isdigit():
+                    self.chunk[()] = value
+
+        elif isinstance(self.leaf, tables.VLArray) or len(self.leaf.shape) == 1:
+            # Array elements will be read like a[row]
+            if isinstance(self.chunk[row], numpy.bytes_) or \
+                    isinstance(self.chunk[row], numpy.str) or \
+                    isinstance(self.chunk[row], str):
+                self.chunk[row] = value
+                return
+
+            if isinstance(self.chunk[row], numpy.float):
+                if value.replace('.', '', 1).isdigit():
+                    self.chunk[row] = value
+                return
+            if isinstance(self.chunk[row], numpy.integer):
+                if value.isdigit():
+                    self.chunk[row] = value
+
+        else:
+            # Dataset elements will be read like a[row][column]
+            if isinstance(self.chunk[row][col], numpy.bytes_) or \
+                    isinstance(self.chunk[row][col], numpy.str):
+                value = numpy.array([value])
+                value = value.astype(dtype=type(self.chunk[row][col]), copy=False)
+                self.chunk[row][col] = value[0]
+                return
+
+            if isinstance(self.chunk[row][col], numpy.float):
+                if value.replace('.', '', 1).isdigit():
+                    self.chunk[row][col] = value
+                return
+            if isinstance(self.chunk[row][col], numpy.integer):
+                if value.isdigit():
+                    self.chunk[row][col] = value
