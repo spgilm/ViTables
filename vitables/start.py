@@ -26,7 +26,6 @@ import logging
 import traceback
 import platform
 import os
-import Clipboard
 import qtpy.QtCore as qtcore
 
 from qtpy import QtWidgets
