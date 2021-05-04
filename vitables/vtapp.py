@@ -601,7 +601,8 @@ class VTApp(QtCore.QObject):
                        }
             filepath, working_dir = vitables.utils.getFilepath(
                 self.gui,
-                translate('VTApp', 'Select a file for opening',
+                translate('VTApp', 'Select a file for opening. *** If opening a file where cell contains a'
+                                   ' multi-dimensional array, double click cell to better render data. ***',
                           'Caption of the File Open... dialog'),
                 dfilter=translate('VTApp',
                                   """HDF5 Files (*.hdf *.h5 *.hd5 *.hdf5);;"""
