@@ -25,7 +25,7 @@ This module defines a widget that wraps the view widget of leaves.
 When a leaf node is opened in the tree of databases view the data stored in
 that leaf will be displayed in the workspace using this wrapper widget.
 """
-
+import numpy
 from qtpy import QtCore
 from qtpy import QtWidgets
 from PyQt5.Qt import QApplication, QClipboard
@@ -95,6 +95,7 @@ class DataSheet(QtWidgets.QMdiSubWindow):
         self.aboutToActivate.connect(self.syncTreeView)
         self.leaf_view.doubleClicked.connect(self.zoomCell)
         self.clip = QApplication.clipboard()
+        self.md_array(self.leaf_view.tmodel)
 
     def closeEvent(self, event):
         """Close the window cleanly with the close button of the title bar.
@@ -147,7 +148,6 @@ class DataSheet(QtWidgets.QMdiSubWindow):
 
         :Parameter index: the index (in the leaf model) of the cell being zoomed
         """
-
         row = index.row()
         column = index.column()
         tmodel = index.model()
@@ -167,7 +167,19 @@ class DataSheet(QtWidgets.QMdiSubWindow):
 
         zoom_cell.ZoomCell(data, title, self.vtgui.workspace,
                            self.dbt_leaf)
-        
+
+    def md_array(self, index):
+        for col in range(int(index.columnCount())):
+            try:
+                if len(index.cell(0, col)) > 1 and not isinstance(index.cell(0, col), numpy.string_):
+                    msg = QtWidgets.QMessageBox()
+                    msg.setWindowTitle("File With Multi-dimensional Array Opened")
+                    msg.setText("To better display multi-dimensional array that is in a cell, double click cell to display cell contents as its own window.")
+                    x = msg.exec_()
+                    break
+            except TypeError:
+                pass
+
     def clipping(self, index):
         self.clip.clear()
         row = index.row()
