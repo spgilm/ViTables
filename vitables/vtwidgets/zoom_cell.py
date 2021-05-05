@@ -319,5 +319,3 @@ class ZoomCell(QtWidgets.QMdiSubWindow):
         else:
             caption = '{0}: ({1}, {2})'.format(self.title, row, col)
         ZoomCell(cell, caption, self.workspace, self.dbt_leaf)
-
-

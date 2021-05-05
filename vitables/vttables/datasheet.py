@@ -174,7 +174,8 @@ class DataSheet(QtWidgets.QMdiSubWindow):
                 if len(index.cell(0, col)) > 1 and not isinstance(index.cell(0, col), numpy.string_):
                     msg = QtWidgets.QMessageBox()
                     msg.setWindowTitle("File With Multi-dimensional Array Opened")
-                    msg.setText("To better display multi-dimensional array that is in a cell, double click cell to display cell contents as its own window.")
+                    msg.setText("To better display multi-dimensional array that is in a cell, "
+                                "double click cell to display cell contents as its own window.")
                     x = msg.exec_()
                     break
             except TypeError:

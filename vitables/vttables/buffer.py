@@ -267,6 +267,7 @@ class Buffer(object):
         import numpy
         if self.chunk.shape == ():
             # Array element will be read like a[()]
+            print("GET IN")
             if isinstance(self.chunk[()], numpy.bytes_) or \
                     isinstance(self.chunk[()], numpy.str):
                 value = numpy.array([value])
@@ -282,8 +283,9 @@ class Buffer(object):
                 if value.isdigit():
                     self.chunk[()] = value
 
-        elif isinstance(self.leaf, tables.VLArray) or len(self.leaf.shape) == 1:
+        elif isinstance(self.leaf, tables.VLArray):
             # Array elements will be read like a[row]
+            print("GET OUT")
             if isinstance(self.chunk[row], numpy.bytes_) or \
                     isinstance(self.chunk[row], numpy.str) or \
                     isinstance(self.chunk[row], str):
@@ -298,8 +300,37 @@ class Buffer(object):
                 if value.isdigit():
                     self.chunk[row] = value
 
-        else:
-            # Dataset elements will be read like a[row][column]
+        elif isinstance(self.leaf, tables.Table):
+            if isinstance(self.chunk[row][col], numpy.bytes_) or \
+                    isinstance(self.chunk[row][col], numpy.str):
+                value = numpy.array([value])
+                value = value.astype(dtype=type(self.chunk[row][col]), copy=False)
+                self.chunk[row][col] = value[0]
+                return
+
+            if isinstance(self.chunk[row][col], numpy.float):
+                if value.replace('.', '', 1).isdigit():
+                    self.chunk[row][col] = value
+                return
+            if isinstance(self.chunk[row][col], numpy.integer):
+                if value.isdigit():
+                    self.chunk[row][col] = value
+        elif len(self.leaf.shape) == 1:
+            print("GET OUT")
+            if isinstance(self.chunk[row], numpy.bytes_) or \
+                    isinstance(self.chunk[row], numpy.str) or \
+                    isinstance(self.chunk[row], str):
+                self.chunk[row] = value
+                return
+
+            if isinstance(self.chunk[row], numpy.float):
+                if value.replace('.', '', 1).isdigit():
+                    self.chunk[row] = value
+                return
+            if isinstance(self.chunk[row], numpy.integer):
+                if value.isdigit():
+                    self.chunk[row] = value
+        elif len(self.leaf.shape) > 1:
             if isinstance(self.chunk[row][col], numpy.bytes_) or \
                     isinstance(self.chunk[row][col], numpy.str):
                 value = numpy.array([value])
